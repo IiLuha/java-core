@@ -71,6 +71,31 @@ count = 100
 
 Как и ожидалось volatile и не синхронизированный варианты были посчитанны с ошибкой, так как никак не предотвращают Race
 condition. Вариант с блоком synchronized оказался самым долгим, при этом лок отработал очень быстро, гораздо быстрее.
+
+Увидел, что в локе не туда вставил слип, переписал ещё раз.
+Третий результат:
+Volatile10 time = 104
+count = 9
+Lock10 time = 1110
+count = 10
+Synch10 time = 1057
+count = 10
+Atomic10 time = 107
+count = 10
+Unsynch10 time = 109
+count = 3
+Lock100 time = 11025
+count = 100
+Volatile100 time = 111
+count = 91
+Unsynch100 time = 109
+count = 95
+Synch100 time = 10961
+count = 100
+Atomic100 time = 110
+count = 100
+
+Теперь лок по времени почти такой же, как synchronized блок.
  */
 public class ThreadsIT {
 
