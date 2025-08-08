@@ -18,11 +18,10 @@ public class MultithreadingSiteVisitor {
     }
 
     public void visitMultithread(int numOfThreads) {
-        for (int i = 0; i < numOfThreads; i++) {
-            threads.add(new Thread(siteVisitCounter::incrementVisitCount));
-        }
         startTime = System.currentTimeMillis();
-        for (Thread thread : threads) {
+        for (int i = 0; i < numOfThreads; i++) {
+            Thread thread = new Thread(siteVisitCounter::incrementVisitCount);
+            threads.add(thread);
             thread.start();
         }
     }
@@ -35,6 +34,6 @@ public class MultithreadingSiteVisitor {
     }
 
     public long getTotalTimeOfHandling() {
-        return (endTime - startTime) / 1000;
+        return (endTime - startTime);
     }
 }

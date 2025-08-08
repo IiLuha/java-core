@@ -46,8 +46,33 @@ count = 100
 позволяет ему быстро работать, а в вариантах волатайл и без синхронизации просто нет дорогостоющих операций
 синхронизации, потому они быстрее. Лок наверно должен работать по времени немного быстрее синхронайзд блока, но точно не
 знаю.
+
+После изменения классов результат такой:
+Volatile10 time = 161
+count = 10
+Lock10 time = 2
+count = 10
+Atomic10 time = 105
+count = 10
+Unsynch10 time = 108
+count = 6
+Synch10 time = 1042
+count = 10
+Atomic100 time = 120
+count = 100
+Lock100 time = 9
+count = 100
+Volatile100 time = 110
+count = 93
+Unsynch100 time = 108
+count = 95
+Synch100 time = 10979
+count = 100
+
+Как и ожидалось volatile и не синхронизированный варианты были посчитанны с ошибкой, так как никак не предотвращают Race
+condition. Вариант с блоком synchronized оказался самым долгим, при этом лок отработал очень быстро, гораздо быстрее.
  */
-public class threadsIT {
+public class ThreadsIT {
 
     private static final int TEN = 10;
     private static final int HUNDRED = 100;

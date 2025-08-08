@@ -6,6 +6,11 @@ public class VolatileCounter  implements SiteVisitCounter{
 
     @Override
     public void incrementVisitCount() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         visitCount++;
     }
 

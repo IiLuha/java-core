@@ -12,6 +12,11 @@ public class SynchronizedBlockCounter  implements SiteVisitCounter{
     @Override
     public void incrementVisitCount() {
         synchronized(monitor) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             visitCount++;
         }
     }

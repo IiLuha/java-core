@@ -8,6 +8,11 @@ public class ReentrantLockCounter  implements SiteVisitCounter{
     private final ReentrantLock lock;
 
     public ReentrantLockCounter() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         lock = new ReentrantLock();
     }
 
