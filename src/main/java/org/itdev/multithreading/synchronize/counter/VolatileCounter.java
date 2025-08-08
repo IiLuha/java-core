@@ -1,8 +1,8 @@
-package org.itdev.multithreading.counter;
+package org.itdev.multithreading.synchronize.counter;
 
-public class UnsynchronizedCounter implements SiteVisitCounter{
+public class VolatileCounter  implements SiteVisitCounter{
 
-    private int visitCount;
+    private volatile int visitCount;
 
     @Override
     public void incrementVisitCount() {

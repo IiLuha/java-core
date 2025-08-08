@@ -1,6 +1,6 @@
-package org.itdev.multithreading.visitor;
+package org.itdev.multithreading.synchronize.counter.visitor;
 
-import org.itdev.multithreading.counter.SiteVisitCounter;
+import org.itdev.multithreading.synchronize.counter.SiteVisitCounter;
 
 import java.util.ArrayList;
 import java.util.List;

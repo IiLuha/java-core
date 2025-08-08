@@ -1,12 +1,12 @@
-package org.itdev.integration.multithreading;
+package org.itdev.integration.multithreading.synchronize;
 
-import org.itdev.multithreading.counter.AtomicIntegerCounter;
-import org.itdev.multithreading.counter.ReentrantLockCounter;
-import org.itdev.multithreading.counter.SiteVisitCounter;
-import org.itdev.multithreading.counter.SynchronizedBlockCounter;
-import org.itdev.multithreading.counter.UnsynchronizedCounter;
-import org.itdev.multithreading.counter.VolatileCounter;
-import org.itdev.multithreading.visitor.MultithreadingSiteVisitor;
+import org.itdev.multithreading.synchronize.counter.AtomicIntegerCounter;
+import org.itdev.multithreading.synchronize.counter.ReentrantLockCounter;
+import org.itdev.multithreading.synchronize.counter.SiteVisitCounter;
+import org.itdev.multithreading.synchronize.counter.SynchronizedBlockCounter;
+import org.itdev.multithreading.synchronize.counter.UnsynchronizedCounter;
+import org.itdev.multithreading.synchronize.counter.VolatileCounter;
+import org.itdev.multithreading.synchronize.counter.visitor.MultithreadingSiteVisitor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

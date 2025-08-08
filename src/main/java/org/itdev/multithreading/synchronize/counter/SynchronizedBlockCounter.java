@@ -1,4 +1,4 @@
-package org.itdev.multithreading.counter;
+package org.itdev.multithreading.synchronize.counter;
 
 public class SynchronizedBlockCounter  implements SiteVisitCounter{
 
