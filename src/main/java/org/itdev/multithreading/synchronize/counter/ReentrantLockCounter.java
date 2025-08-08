@@ -1,4 +1,4 @@
-package org.itdev.multithreading.counter;
+package org.itdev.multithreading.synchronize.counter;
 
 import java.util.concurrent.locks.ReentrantLock;
 
