@@ -6,7 +6,7 @@ import org.itdev.multithreading.synchronize.counter.SiteVisitCounter;
 import org.itdev.multithreading.synchronize.counter.SynchronizedBlockCounter;
 import org.itdev.multithreading.synchronize.counter.UnsynchronizedCounter;
 import org.itdev.multithreading.synchronize.counter.VolatileCounter;
-import org.itdev.multithreading.synchronize.counter.visitor.MultithreadingSiteVisitor;
+import org.itdev.multithreading.synchronize.visitor.MultithreadingSiteVisitor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,4 @@
-package org.itdev.multithreading.synchronize.counter.visitor;
+package org.itdev.multithreading.synchronize.visitor;
 
 import org.itdev.multithreading.synchronize.counter.SiteVisitCounter;
 
