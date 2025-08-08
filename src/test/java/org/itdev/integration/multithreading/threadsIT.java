@@ -1,0 +1,167 @@
+package org.itdev.integration.multithreading;
+
+import org.itdev.multithreading.counter.AtomicIntegerCounter;
+import org.itdev.multithreading.counter.ReentrantLockCounter;
+import org.itdev.multithreading.counter.SiteVisitCounter;
+import org.itdev.multithreading.counter.SynchronizedBlockCounter;
+import org.itdev.multithreading.counter.UnsynchronizedCounter;
+import org.itdev.multithreading.counter.VolatileCounter;
+import org.itdev.multithreading.visitor.MultithreadingSiteVisitor;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/* Результат вывода:
+Volatile10 time = 0
+count = 10
+Lock10 time = 0
+count = 10
+Atomic10 time = 0
+count = 10
+Unsynch10 time = 0
+count = 10
+Synch10 time = 0
+count = 10
+Lock100 time = 0
+count = 100
+Volatile100 time = 0
+count = 100
+Unsynch100 time = 0
+count = 100
+Synch100 time = 0
+count = 100
+Atomic100 time = 0
+count = 100
+
+"Проанализируйте и объясните результаты: время выполнения, точность счетчика, влияние разных
+методов синхронизации.
+Почему какие-то реализации счетчика быстрее/медленнее?
+Почему какие-то реализации работают неправильно?"
+
+Различий нет никаких, все варианты отработали правильно.
+В теории volatile должен был отработать неправильно на большом кол-ве операций, так как он не спасает от Race condition,
+и, соответственно, вариант без добавления синхронизаций тоже мог бы сработать неправильно.
+Также вполне вероятно метод с блоком Synchronized должен отрабатывать медленнее чем варианты без синхронизации, волатайл
+и атомик. Атомик работает напрямую с памятью, через объект Unsafe методы которого написаны на C (или С++, не помню), что
+позволяет ему быстро работать, а в вариантах волатайл и без синхронизации просто нет дорогостоющих операций
+синхронизации, потому они быстрее. Лок наверно должен работать по времени немного быстрее синхронайзд блока, но точно не
+знаю.
+ */
+public class threadsIT {
+
+    private static final int TEN = 10;
+    private static final int HUNDRED = 100;
+
+    private SiteVisitCounter counter;
+    private MultithreadingSiteVisitor visitor;
+
+    @Test
+    public void Unsynch10ThreadTest() {
+        counter = new UnsynchronizedCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(TEN);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Unsynch10 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Volatile10ThreadTest() {
+        counter = new VolatileCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(TEN);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Volatile10 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Atomic10ThreadTest() {
+        counter = new AtomicIntegerCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(TEN);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Atomic10 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Synch10ThreadTest() {
+        counter = new SynchronizedBlockCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(TEN);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Synch10 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Lock10ThreadTest() {
+        counter = new ReentrantLockCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(TEN);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Lock10 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Unsynch100ThreadTest() {
+        counter = new UnsynchronizedCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(HUNDRED);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Unsynch100 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Volatile100ThreadTest() {
+        counter = new VolatileCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(HUNDRED);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Volatile100 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Atomic100ThreadTest() {
+        counter = new AtomicIntegerCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(HUNDRED);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Atomic100 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Synch100ThreadTest() {
+        counter = new SynchronizedBlockCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(HUNDRED);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Synch100 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+
+    @Test
+    public void Lock100ThreadTest() {
+        counter = new ReentrantLockCounter();
+        visitor = new MultithreadingSiteVisitor(counter);
+        visitor.visitMultithread(HUNDRED);
+        assertDoesNotThrow(visitor::waitUntilAllVisited);
+        long time = visitor.getTotalTimeOfHandling();
+        System.out.println("Lock100 time = " + time);
+        System.out.println("count = " + counter.getVisitCount());
+    }
+}
