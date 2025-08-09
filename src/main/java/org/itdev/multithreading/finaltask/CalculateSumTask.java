@@ -21,6 +21,7 @@ public class CalculateSumTask implements Callable<Integer> {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            return -1;
         }
         return intsToSum.stream()
                 .mapToInt(Integer::intValue)

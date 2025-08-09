@@ -49,7 +49,7 @@ public class FinalTaskIT {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(dataProcessor.getCurrentTaskCountInt());
+            System.out.println(dataProcessor.getTaskCountInt());
         }
         taskNames.stream()
                 .map(dataProcessor::getTaskResult)
@@ -59,7 +59,6 @@ public class FinalTaskIT {
     @Test
     public void testFixedThreadPool() {
         dataProcessor = new DataProcessor(
-                new AtomicInteger(ZERO),
                 new AtomicInteger(ZERO),
                 Executors.newFixedThreadPool(N_THREADS),
                 new HashMap<>(N_TASKS)
@@ -82,7 +81,7 @@ public class FinalTaskIT {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(dataProcessor.getCurrentTaskCountInt());
+            System.out.println(dataProcessor.getTaskCountInt());
         }
         taskNames.stream()
                 .map(dataProcessor::getTaskResult)
@@ -92,7 +91,6 @@ public class FinalTaskIT {
     @Test
     public void testSingleThreadExecutor() {
         dataProcessor = new DataProcessor(
-                new AtomicInteger(ZERO),
                 new AtomicInteger(ZERO),
                 Executors.newSingleThreadExecutor(),
                 new HashMap<>(N_TASKS)
@@ -115,7 +113,7 @@ public class FinalTaskIT {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(dataProcessor.getCurrentTaskCountInt());
+            System.out.println(dataProcessor.getTaskCountInt());
         }
         taskNames.stream()
                 .map(dataProcessor::getTaskResult)
