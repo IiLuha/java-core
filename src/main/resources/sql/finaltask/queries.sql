@@ -6,6 +6,8 @@
 --для BETWEEN '2023-01-01' AND '2023-01-31' за 134 с
 --После btree индекса на customer_id и product_id:
 --нет изменений, всё ещё нет merge join
+--После hash индекса на customer_id:
+--нет изменений
 BEGIN TRANSACTION;
 
 EXPLAIN ANALYZE
@@ -24,13 +26,15 @@ COMMIT;
 
 --Запрос для проверки джоинов c фильтрацией по индексу
 --Итоги:
---Выполнено два хэш джоина и 2 сиквенс скан по  таблицам customer и product
+--Выполнено два хэш джоина и 2 сиквенс скан по таблицам customer и product
 --индекс скан по ордерс.
 --Цена 402к-1571к, время 83 с
 --После btree индекса на customer_id и product_id:
 --Цена 402к-1571к, время 95 с
 --не понимаю, почему нет  merge join и почему не стало лучше
 --всё ещё сиквенс сканы
+--После hash индекса на customer_id:
+--нет изменений
 BEGIN TRANSACTION;
 
 EXPLAIN ANALYZE
@@ -51,7 +55,9 @@ COMMIT;
 --Итоги:
 --259 с, цена 1544к, сиквенс скан
 --запустил analyze ещё раз: 54 с, цена 1544к, сиквенс скан
---После btree индекса customer_id:
+--После btree индекса на customer_id и product_id:
+--нет изменений
+--После hash индекса на customer_id:
 --нет изменений
 BEGIN TRANSACTION;
 
@@ -66,8 +72,10 @@ COMMIT;
 --Итоги:
 --255 с, цена 1057к, сиквенс скан
 --запустил analyze ещё раз: 3 с, цена 1к-1057к, сиквенс скан
---После btree индекса customer_id:
---20 мс, цена 0-28, bind scan стало сильно лучше
+--После btree индекса на customer_id и product_id:
+--20 мс, цена 0-28, index scan стало сильно лучше
+--После hash индекса на customer_id:
+--25 мс, цена 0-28, bind scan то же самое что и  при индексе btree
 BEGIN TRANSACTION;
 
 EXPLAIN ANALYZE
