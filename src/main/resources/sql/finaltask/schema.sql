@@ -17,6 +17,9 @@ amount NUMERIC(10,2),
 status TEXT
 );
 
+CREATE INDEX idx_btree_orders_customer_id
+ON orders(customer_id);
+
 CREATE TABLE IF NOT EXISTS customers (
 customer_id SERIAL PRIMARY KEY,
 name TEXT,
